@@ -1,0 +1,282 @@
+---
+layout: default
+---
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="col-md-8">
+            {% if site.author.publications %}
+                <h3 class="title with-icon"><span class="fa fa-file cat-title"></span><span class="title-text">Publications</span></h3>
+                <ul class="timeline">
+                    {% for paper in site.author.publications %}
+                        <li class="timeline-inverted">
+                            <div class="timeline-badge info">{{ paper.year }}</div>
+                            <div class="timeline-panel grid-block">
+                                <div class="timeline-heading">
+                                    <h4 class="timeline-title"><a href="https://doi.org/{{ paper.doi }}">{{ paper.title }}</a> </h4>
+                                    <p>
+                                        <em>{{ paper.authors }}</em>
+                                    </p>
+                                </div>
+                                <div class="timeline-body">
+                                    <p>
+										{{ paper.journal }}, {{ paper.year }}, DOI: <a href="https://doi.org/{{ paper.doi }}">{{ paper.doi }}</a>
+									</p>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% if site.author.educationHistory %}
+                <h3 class="title with-icon"><span class="fa fa-book cat-title"></span><span class="title-text">Education</span></h3>
+                <ul class="timeline">
+                    {% for education in site.author.educationHistory %}
+                        <li class="timeline-inverted">
+                            {% if education.started %}
+                                <div class="timeline-badge info">{{ education.started }}</div>
+                            {% endif %}
+                            <div class="timeline-panel grid-block">
+                                <div class="timeline-heading">
+									<table>
+										<tr>
+											<td>
+												{% if education.icon %}
+													<img src="{{ education.icon }}" class="educationIcon" />
+												{% endif %}
+											</td>
+											<td>
+												{% if education.organization %}
+													<h4 class="timeline-title">{{ education.organization }}</h4>
+												{% endif %}
+												<p>
+													<small class="text-muted">
+														{% if education.degree %}
+															{{ education.degree }}, {{ education.major }}
+														{% endif %}
+													</small>
+												</p>
+											</td>
+										</tr>
+									</table>
+                                    <p>
+                                        <small class="text-muted">
+                                            {% if education.duration %}
+                                                <i class="fa fa-calendar"></i> {{ education.duration }}
+                                            {% endif %}
+                                            {% if education.location %}
+                                                | <i class="fa fa-map-marker"></i>  {{ education.location }}
+                                            {% endif %}
+											{% if education.award %}
+												| <i class="fa fa-trophy"></i>  {{ education.award }}
+											{% endif %}
+                                        </small>
+                                    </p>
+                                </div>
+                                <div class="timeline-body">
+                                    {% if education.description %}
+                                        <p>{{ education.description }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <div class="col-md-4">
+            {% if site.author.stackoverflow or site.author.software %}
+                <h3 class="title with-icon"><span class="fa fa-code cat-title"></span><span class="title-text">Software</span></h3>
+                {% if site.author.stackoverflow %}
+                <div class="grid-block">
+                  <p><a href="//stackoverflow.com/users/{{ site.author.stackoverflow }}"><img src="//stackoverflow.com/users/flair/{{ site.author.stackoverflow }}.png"></a></p>
+                  <ul class="list-unstyled list-stackoverflow" id="stackoverflow_questions_and_answers"></ul>
+                  <script type="text/javascript">
+                  $(function () {
+                    var api_url_user = "//api.stackexchange.com/2.2/users/{{ site.author.stackoverflow }}/answers?pagesize=5&order=desc&sort=votes&site=stackoverflow";
+                    var api_url_format_questions = "//api.stackexchange.com/2.2/questions/%question_ids%?site=stackoverflow";
+
+                    $.get(api_url_user, function (data_user) {
+                      if (!data_user) {
+                        return;
+                      }
+                      if (!data_user.items) {
+                        return;
+                      }
+                      if (!data_user.items.length) {
+                        return;
+                      }
+
+                      var question_ids = [];
+                      var complex_questions = {};
+                      $.each(data_user.items, function (index, item) {
+                        if (!item) {
+                          return;
+                        }
+                        if (!item.question_id) {
+                          return;
+                        }
+                        if (!item.answer_id) {
+                          return;
+                        }
+                        if (!item.score) {
+                          return;
+                        }
+
+                        complex_questions[item.question_id] = {
+                          "question_id": item.question_id,
+                          "answer_id": item.answer_id,
+                          "score": humanize_score(item.score),
+                          "is_accepted": item.is_accepted
+                        };
+                        question_ids.push(item.question_id);
+                      });
+
+                      var api_url_questions = api_url_format_questions.replace('%question_ids%', question_ids.join(';'));
+
+                      $.get(api_url_questions, function (data_questions) {
+                        if (!data_questions) {
+                          return;
+                        }
+                        if (!data_questions.items) {
+                          return;
+                        }
+                        if (!data_questions.items.length) {
+                          return;
+                        }
+
+                        $.each(data_questions.items, function (index, item) {
+                          if (!item) {
+                            return;
+                          }
+                          if (!item.question_id) {
+                            return;
+                          }
+                          var complex_question = complex_questions[item.question_id];
+                          if (!complex_question) {
+                            return;
+                          }
+
+                          complex_question.title = item.title;
+                          complex_question.link = item.link;
+                        });
+
+                        render_complex_questions(complex_questions);
+                      });
+                    });
+                  });
+                  function humanize_score(score) {
+                    if (!score) {
+                      return;
+                    }
+
+                    if (score / 1000 > 1) {
+                      return (score / 1000) + "k";
+                    } else {
+                      return score;
+                    }
+                  }
+                  function render_complex_questions(complex_questions) {
+                    if (!complex_questions) {
+                      return;
+                    }
+
+                    complex_questions = $.map(complex_questions, function (complex_question) {
+                      return [complex_question];
+                    });
+                    complex_questions.sort(function (a, b) {
+                      return b.score - a.score;
+                    });
+
+                    $stackoverflow_questions_and_answers = $('#stackoverflow_questions_and_answers');
+
+                    $.each(complex_questions, function (index, complex_question) {
+                      var link = complex_question.link + '#answer-' + complex_question.answer_id;
+                      var $li = $('<li />');
+                      $('<span />')
+                        .addClass('badge')
+                        .addClass(complex_question.is_accepted ? 'progress-bar-success' : '')
+                        .text(complex_question.score)
+                        .appendTo($li);
+                      $('<a />')
+                        .attr('href', link)
+                        .attr('target', '_blank')
+                        .text(complex_question.title)
+                        .appendTo($li);
+                      $li.appendTo($stackoverflow_questions_and_answers);
+                    });
+                  }
+                  </script>
+                </div>
+                {% endif %}
+                {% if site.author.software %}
+                <div class="grid-block">
+                    <ul class="list-unstyled list-skills" style="margin-bottom: -1em">
+                        {% for program in site.author.software %}
+                            <li>
+								<table>
+									<tr>
+										<td style="width: 0">
+											<img src="{{ program.icon }}" class="softwareIcon" />
+										</td>
+										<td style="padding-bottom: 1em">
+											<table>
+												<tr>
+													<td class="softwareTitle">
+														<a href="{{ program.url }}">{{ program.name }}</a>
+													</td>
+												</tr>
+												<tr>
+													<td class="softwareDesc">
+														<span>{{ program.description }}</span>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            {% endif %}
+            {% if site.author.libraries %}
+                <div class="deviter"></div>
+                <h3 class="title with-icon"><span class="fa fa-book cat-title"></span><span class="title-text">Libraries</span></h3>
+                <div class="grid-block">
+                    <ul class="list-unstyled list-skills">
+						{% for library in site.author.libraries %}
+                            <li>
+								<table>
+									<tr>
+										<td style="width: 0">
+											<img src="{{ library.icon }}" class="softwareIcon" />
+										</td>
+										<td style="padding-bottom: 1em">
+											<table>
+												<tr>
+													<td class="softwareTitle">
+														<a href="{{ library.url }}">{{ library.name }}</a>
+													</td>
+												</tr>
+												<tr>
+													<td class="softwareDesc">
+														<span>{{ library.description }}</span>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+                            </li>
+                        {% endfor %}
+						
+						<li style="text-align: center">
+							<a class="button" href="https://github.com/arklumpus">More...</a>
+						</li>
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

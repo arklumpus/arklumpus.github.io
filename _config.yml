@@ -1,0 +1,143 @@
+# Site settings
+title: Giorgio Bianchini
+description: Giorgio Bianchini's CV
+favicon: /assets/img/favicon.ico
+touch_icon: /assets/img/appletouch.png
+baseurl: https://ddbullfrog.github.io/resumecard
+url: https://ddbullfrog.github.io/resumecard
+rss_url: /pages/atom.xml
+
+# Build settings
+markdown: kramdown
+
+exclude: [vendor]
+
+# Author settings
+author:
+  name: Giorgio Bianchini
+  title: PhD Student
+  address: University of Bristol
+  email: giorgio.bianchini@bristol.ac.uk
+  link:
+  weibo:
+  github: arklumpus
+  linkedin: giorgiobianchini
+  orcid: 0000-0003-0223-0339
+  twitter:
+  avatar: /assets/img/avatar.jpg
+  stackoverflow:
+  publications:
+    - publication5:
+      title: "The occurrence of 2-methylhopanoids in modern bacteria and the geological record"
+      authors: B. David A. Naafs, <b>Giorgio Bianchini</b>, Fanny M. Monteiro, Patricia Sánchez-Baracaldo
+      journal: Geobiology (in press)
+      year: 2021
+      doi: 10.1111/gbi.12465
+    - publication4:
+      title: "Cyanobacteria and biogeochemical cycles through Earth history"
+      authors: Patricia Sánchez-Baracaldo, <b>Giorgio Bianchini</b>, Jamie D Wilson, Andrew H Knoll
+      journal: Trends in Microbiology
+      year: 2021
+      doi: 10.1016/j.tim.2021.05.008
+    - publication3:
+      title: "sMap: Evolution of independent, dependent and conditioned discrete characters in a Bayesian framework"
+      authors: <b>Giorgio Bianchini</b>, Patricia Sánchez-Baracaldo
+      journal: Methods in Ecology and Evolution
+      year: 2021
+      doi: 10.1111/2041-210X.13540
+    - publication2:
+      title: "Insights into the evolution of picocyanobacteria and phycoerythrin genes (mpeBA and cpeBA)"
+      authors: Patricia Sánchez-Baracaldo, <b>Giorgio Bianchini</b>, Andrea Di Cesare, Cristiana Callieri, Nathan AM Chrismas
+      journal: Frontiers in microbiology
+      year: 2019
+      doi: 10.3389/fmicb.2019.00045
+    - publication1:
+      title: "Reply to Nakov et al.: Model choice requires biological insight when studying the ancestral habitat of photosynthetic eukaryotes"
+      authors: Patricia Sánchez-Baracaldo, <b>Giorgio Bianchini</b>, John P Huelsenbeck, John A Raven, Davide Pisani, Andrew H Knoll
+      journal: Proceedings of the National Academy of Sciences
+      year: 2017
+      doi: 10.1073/pnas.1717417114
+      
+  educationHistory:
+    - education4:
+      organization: University of Bristol
+      location: Bristol, UK
+      icon: /assets/img/bristol.svg
+      degree: PhD (candidate)
+      major: Physical Geography
+      started: 2017
+      duration: "2017 - 2021 (exp.)"
+      award:
+      description: "<em>Thesis</em>: Bayesian methods using genomic data to gain insights into the history of biogeochemical cycles."  
+    - education3:
+      organization: University of Pisa
+      location: Pisa, Italy
+      icon: /assets/img/unipi.svg
+      degree: "Master's Degree (M.Sc.)"
+      major: Conservation and Evolution
+      started: 2015
+      duration: 2015 - 2017
+      award: "110 cum laude (GPA: 29.52/30)"
+      description: "<em>Dissertation</em>: Analysis of the applicability of miRNA clusters as phylogenetic markers, through the development of a method to identify the sequences that best predict a cladogram."
+    - education2:
+      organization: Scuola Normale Superiore
+      location: Pisa, Italy
+      icon: /assets/img/SNS.svg
+      degree: Faculty of Mathematical and Natural Sciences
+      major: Biology
+      started: 2012
+      duration: 2012 - 2017
+      award:
+      description: "Scuola Normale Superiore (SNS - <a href=\"https://www.sns.it\">https://www.sns.it</a>) is a very prestigious and selective (only about 5 Biology students admitted every year) Italian University Institution based on the college model, planning a parallel and complementary career with respect to the University of Pisa. Every year, an SNS student has to respect academic duties such as timing, additional exams, advanced lectures, research work from very early years and has to keep very high grades. Students of SNS do not pay any fee – it is a 5 years honor scholarship - and the SNS provides its students with all of the basic services, together with a little stipend."
+    - education1:
+      organization: University of Pisa
+      location: Pisa, Italy
+      icon: /assets/img/unipi.svg
+      degree: Bachelor of Science (B.Sc.)
+      major: Biological Sciences
+      started: 2012
+      duration: 2012 - 2015
+      award: "110 cum laude (GPA: 29.07/30)"
+      description: "<em>Dissertation</em>: Convergent evolution in three-spined stickleback populations through regulatory modifications in development-related genes."
+  software:
+    - software1:
+      name: TreeViewer
+      url: https://treeviewer.org
+      description: Cross-platform software to draw phylogenetic trees
+      icon: /assets/img/TreeViewer.svg
+    - software2:
+      name: sMap
+      url: https://github.com/arklumpus/sMap#smap-evolution-of-independent-dependent-and-conditioned-discrete-characters-in-a-bayesian-framework
+      description: Evolution of Independent, Dependent and Conditioned discrete characters in a Bayesian framework
+      icon: /assets/img/sMap.svg
+    - software3:
+      name: AlignmentViewer
+      url: http://sdsssdfd.altervista.org/arklumpus/AlignmentViewer/AlignmentViewer.html
+      description: An online program for viewing and filtering nucleotide and amino-acid sequences.
+      icon: /assets/img/AlignmentViewer.svg
+    - software4:
+      name: DNA PolymeRACE
+      url: http://sdsssdfd.altervista.org/arklumpus/DNAPolymeRACE/
+      description: A game to learn about DNA replication.
+      icon: /assets/img/PolymeRACE.svg
+  libraries:
+    - library1:
+      name: AvaloniaColorPicker
+      url: https://github.com/arklumpus/AvaloniaColorPicker
+      description: A color picker for Avalonia.
+      icon: /assets/img/ColorPicker.svg
+    - library2:
+      name: VectSharp
+      url: https://github.com/arklumpus/VectSharp
+      description: A light library for C# vector graphics.
+      icon: /assets/img/VectSharp.svg
+    - library3:
+      name: MuPDFCore
+      url: https://github.com/arklumpus/MuPDFCore
+      description: Multiplatform .NET Core bindings for MuPDF.
+      icon: /assets/img/MuPDFCore.svg
+    - library4:
+      name: TreeNode
+      url: https://github.com/arklumpus/TreeNode
+      description: Read, write and manipulate phylogenetic trees.
+      icon: /assets/img/TreeNode.svg
