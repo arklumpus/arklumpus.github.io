@@ -523,7 +523,8 @@ hr {
 .softwareTitle
 {
 	font-weight: bold;
-	font-size: 2em;
+	font-size: 1.75em;
+	overflow-wrap: anywhere;
 }
 
 .softwareDesc
