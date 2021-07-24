@@ -3,8 +3,8 @@ title: Giorgio Bianchini
 description: Giorgio Bianchini's CV
 favicon: /assets/img/favicon.ico
 touch_icon: /assets/img/appletouch.png
-baseurl: https://arklumpus.github.io
-url: https://arklumpus.github.io
+baseurl: https://giorgiobianchini.com
+url: https://giorgiobianchini.com
 rss_url: /pages/atom.xml
 
 # Build settings
@@ -27,10 +27,16 @@ author:
   avatar: /assets/img/avatar.jpg
   stackoverflow:
   publications:
+    - publication3:
+      title: "sMap: Evolution of independent, dependent and conditioned discrete characters in a Bayesian framework"
+      authors: <b>Giorgio Bianchini</b>, Patricia Sánchez-Baracaldo
+      journal: Methods in Ecology and Evolution
+      year: 2021
+      doi: 10.1111/2041-210X.13540
     - publication5:
       title: "The occurrence of 2-methylhopanoids in modern bacteria and the geological record"
       authors: B. David A. Naafs, <b>Giorgio Bianchini</b>, Fanny M. Monteiro, Patricia Sánchez-Baracaldo
-      journal: Geobiology (in press)
+      journal: Geobiology
       year: 2021
       doi: 10.1111/gbi.12465
     - publication4:
@@ -39,12 +45,6 @@ author:
       journal: Trends in Microbiology
       year: 2021
       doi: 10.1016/j.tim.2021.05.008
-    - publication3:
-      title: "sMap: Evolution of independent, dependent and conditioned discrete characters in a Bayesian framework"
-      authors: <b>Giorgio Bianchini</b>, Patricia Sánchez-Baracaldo
-      journal: Methods in Ecology and Evolution
-      year: 2021
-      doi: 10.1111/2041-210X.13540
     - publication2:
       title: "Insights into the evolution of picocyanobacteria and phycoerythrin genes (mpeBA and cpeBA)"
       authors: Patricia Sánchez-Baracaldo, <b>Giorgio Bianchini</b>, Andrea Di Cesare, Cristiana Callieri, Nathan AM Chrismas
@@ -112,7 +112,7 @@ author:
       icon: /assets/img/sMap.svg
     - software3:
       name: AlignmentViewer
-      url: http://sdsssdfd.altervista.org/arklumpus/AlignmentViewer/AlignmentViewer.html
+      url: AlignmentViewer/AlignmentViewer.html
       description: An online program for viewing and filtering nucleotide and amino-acid sequences.
       icon: /assets/img/AlignmentViewer.svg
     - software4:

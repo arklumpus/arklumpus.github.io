@@ -1,0 +1,414 @@
+﻿<html>
+	<head>
+		<title>Alignment Viewer</title>
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+		<style>
+			body
+			{
+				font-family: 'Open Sans', sans-serif;
+				overflow: hidden;
+			}
+			 
+			.noselect
+			{
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+				-khtml-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+				
+				cursor: default;
+			}
+			
+			.mainTable
+			{
+				width: 100%;
+				height: 100%;
+				border-collapse: collapse;
+			}
+			
+			#uiContainer
+			{
+				height: 1px;
+			}
+			
+			.secondColumn
+			{
+				min-width: 300px;
+				width: 300px;
+			}
+			
+			.firstColumn
+			{
+				
+			}
+			
+			.modalDiv
+			{
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.5);
+			}
+			
+			.modalDiv>div
+			{
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				padding: 20px;
+				background: white;
+				border-radius: 20px;
+				border: 2px solid rgba(0, 0, 0, 0.75);
+				font-size: 2em;
+				color: rgba(0, 0, 0, 0.75);
+				transform: translateX(-50%) translateY(-50%);
+			}
+			
+			.fileButton
+			{
+				font-weight: bold;
+				margin-bottom: 20px;
+				background: rgba(0, 0, 0, 0.2);
+				padding-left: 20px;
+				padding-right: 20px;
+				padding-top: 5px;
+				padding-bottom: 5px;
+				border-radius: 5px;
+				border-right: 2px solid rgba(0, 0, 0, 0.5);
+				border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+				border-left: 2px solid rgba(0, 0, 0, 0.1);
+				border-top: 2px solid rgba(0, 0, 0, 0.1);
+				cursor: hand;
+				transition: all 150ms;
+			}
+			
+			.fileButton:hover
+			{
+				background: rgba(0, 0, 0, 0.1);
+			}
+			
+			.fileButton:active
+			{
+				background: rgba(0, 0, 0, 0.5);
+				border-left: 2px solid rgba(0, 0, 0, 0.5);
+				border-top: 2px solid rgba(0, 0, 0, 0.5);
+				border-right: 2px solid rgba(0, 0, 0, 0.1);
+				border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+			}
+			
+			input[type="file"]
+			{
+				display: none;
+			}
+			
+			.orDrop
+			{
+				font-weight: bold;
+				margin-top: 30px;
+				margin-bottom: 15px;
+				text-align: center;
+			}
+			
+			.partNameTd
+			{
+				height: 20px;
+			}
+			
+			.tableHeader
+			{
+				font: bold 20px Open Sans;
+				border-bottom: 2px solid rgba(0, 0, 0, 0.25);
+				height: 1px;
+			}
+			
+			#uiTable
+			{
+				height: 100%;
+				width: 100%;
+			}
+			
+			input[type="number"]
+			{
+				width: 4em;
+				text-align: right;
+			}
+			
+			#uitable td
+			{
+				width: 1px;
+				white-space: nowrap;
+			}
+			
+			#uitable td:nth-child(3n)
+			{
+				min-width: 2em;
+				width: auto;
+			}
+			
+			#aminoAcidColorCont td
+			{
+				min-width: 0 !important;
+			}
+			
+			#nucColorCont td
+			{
+				min-width: 0 !important;
+			}
+			
+			#filterTable
+			{
+				width: 100%;
+				border-bottom: 2px solid rgba(0, 0, 0, 0.25);
+			}
+		</style>
+		<script type="text/javascript" src="jszip.min.js"></script>
+		<script type="text/javascript" src="sequenceUtils.js"></script>
+		<script type="text/javascript" src="scripts.js"></script>
+		<script type="text/javascript" src="scriptsAlignment.js"></script>
+		<script type="text/javascript" src="uiScripts.js"></script>
+	</head>
+	<body onload="loaded();" ondrop="dropped(event);" ondragover="event.preventDefault();" ondragenter="event.preventDefault();">
+		<table align="center" class="mainTable">
+			<tr>
+				<td class="partNameTd" class="firstColumn"><canvas id="partNameCanvas" style="width: 100%; height: 100%;"></canvas></td>
+				<td rowspan=2 class="secondColumn"><canvas id="partitionCanvas" style="width: 100%; height: 100%;"></canvas></td>
+			</tr>
+			<tr>
+				<td class="firstColumn" rowspan=5><canvas id="mainCanvas" style="width: 100%; height: 100%;"></canvas></td>
+			</tr>
+			<tr style="height: 1px">
+				<td style="text-align: center">
+					<span class="fileButton noselect" style="display: inline-block; margin-bottom: 0; margin-top: 0.5em" onclick="deleteSeq();">Delete sequences</span>
+				</td>
+			</tr>
+			<tr style="height: 1px">
+				<td style="text-align: center">
+					<span class="fileButton noselect" style="display: inline-block; margin-bottom: 0; margin-top: 0.5em" onclick="selectIncomplete();">Select incomplete sequences</span>
+				</td>
+			</tr>
+			<tr style="height: 1px">
+				<td>
+					<table id="filterTable">
+						<tr>
+							<td class="tableHeader" colspan=2>Filter</td>
+						</tr>
+						<tr>
+							<td>Apply to:</td>
+							<td style="width:1px">
+								<select id="filterApply" style="width:100%">
+									<option value="all">All partitions</option>
+									<option value="active" selected>Active partitions</option>
+									<option value="selected">Selected partitions</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>Type:</td>
+							<td style="width:1px">
+								<select id="filterType" style="width:100%">
+									<option value="start">Distance from start</option>
+									<option value="end">Distance from end</option>
+									<option value="gap" selected>Gap content</option>
+									<option value="id+G">Sequence identity (include gaps)</option>
+									<option value="id-G">Sequence identity (exclude gaps)</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>Threshold:</td>
+							<td style="width:1px; white-space:nowrap">
+								<select id="thresholdSide">
+									<option value="greater" select>></option>
+									<option value="smaller"><</option>
+								</select>
+								<input type="number" value="0.5" step=0.1 id="thresholdValue"></input>
+								<select id="thresholdType">
+									<option value="absolute">Absolute</option>
+									<option value="relative" selected>Relative</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>Operation:</td>
+							<td style="width: 1px; white-space: nowrap">
+								<table style="border-collapse: collapse; width: 100%">
+									<tr>
+										<td style="width: 1px">
+											<select id="filterOperation">
+												<option value="set" selected>SET</option>
+												<option value="and">AND</option>
+												<option value="or">OR</option>
+												<option value="andNot">AND NOT</option>
+												<option value="orNot">OR NOT</option>
+												<option value="nand">NAND</option>
+												<option value="xor">XOR</option>
+											</select>
+										</td>
+										<td>
+											<select id="filterValue" style="width: 100%">
+												<option value="0" selected>0</option>
+												<option value="1">1</option>
+											</select>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td colspan=2 style="text-align: center">
+								<span class="fileButton noselect" style="display: inline-block; margin-bottom: 0.5em; margin-top: 0.5em" onclick="applyFilter();">Apply</span>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr style="height: 1px">
+				<td style="text-align: center">
+					<span class="fileButton noselect" style="display: inline-block; margin-bottom: 0; margin-top: 0.5em" onclick="openSave();">Save alignment</span>
+				</td>
+			</tr>
+			<tr>
+				<td colspan=2 id="uiContainer">
+					<div style="width: 98vw; overflow-x: auto; margin-left: 50%; transform: translateX(-50%)">
+						<table id="uiTable"> 
+							<tr>
+								<td class="tableHeader" colspan=13>Display controls</td>
+							</tr>
+							<tr>
+								<td><label for="alphSort">Sort taxa alphabetically</label></td>
+								<td><input type="checkbox" id="alphSort" onchange="uiChange();"></input></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td style="text-align: center" rowspan=4>
+									<table>
+										<tr><td style="text-align: center">Amino acid colors:</td></tr>
+										<tr><td id="aminoAcidColorCont"></td></tr>
+									</table>
+								</td>
+								<td></td>
+								<td></td>
+								<td style="text-align: center" rowspan=4>
+									<table>
+										<tr><td style="text-align: center">Nucleotide colors:</td></tr>
+										<tr><td id="nucColorCont"></td></tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td>Alignment line height:</td>
+								<td><input type="number" value="20" onchange="uiChange();" oninput="uiChange();" id="alnLH"></input></td>
+								<td></td>
+								<td>Alignment line margin:</td>
+								<td><input type="number" value="0" onchange="uiChange();" oninput="uiChange();" id="alnLM"></input></td>
+								<td></td>
+								<td><label for="alnDL">Draw alignment letters</label></td>
+								<td><input type="checkbox" checked onchange="uiChange();" oninput="uiChange();" id="alnDL"></input></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>Alignment block width:</td>
+								<td><input type="number" value="10" onchange="uiChange();" oninput="uiChange();" id="alnBW"></input></td>
+								<td></td>
+								<td>Alignment font size:</td>
+								<td><input type="number" value="12" onchange="uiChange();" oninput="uiChange();" id="alnFS"></input></td>
+								<td></td>
+								<td>Masked sites action:</td>
+								<td>
+									<select value="blur" onchange="uiChange();" oninput="uiChange();" id="alnMA">
+										<option value="show">Show</option>
+										<option value="blur" selected>Blur</option>
+										<option value="hide">Hide</option>
+									</select>
+								</td>
+								<td></td>
+								<td rowspan=2></td>
+								<td rowspan=2></td>
+							</tr>
+							<tr>
+								<td>Half-pixel correction:</td>
+								<td><label for="hpX">X</label><input type="checkbox" checked onchange="uiChange();" oninput="uiChange();" id="hpX"></input><label for="hpY">Y</label><input type="checkbox" onchange="uiChange();" oninput="uiChange();" id="hpY"></input></td>
+								<td></td>
+								<td>Label font size:</td>
+								<td><input type="number" value="16" onchange="uiChange();" oninput="uiChange();" id="alnLFS"></input></td>
+								<td></td>
+								<td>Blurred mask alpha:</td>
+								<td><input type="number" value="0.35" max="1" min="0" step="0.05" onchange="uiChange();" oninput="uiChange();" id="alnBMA"></input></td>
+								<td></td>
+							</tr>
+						</table>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<div class="modalDiv" id="loadDiv">
+			<div>
+				<label for="chooseFile" class="fileButton noselect">Please choose alignment file(s)...</label>
+				<input type="file" id="chooseFile" name="chooseFile" multiple onchange="handleInput(event, this);"></input>
+				<div class="orDrop noselect">...or drop them anywhere!</div>
+			</div>
+		</div>
+		<div class="modalDiv" id="saveDiv" style="display: none">
+			<div>
+				<table style="font-size: 0.5em">
+					<tr>
+						<td style="padding-bottom: 1em">
+							File format:
+						</td>
+						<td style="padding-bottom: 1em">
+							<select id="fileFormat" style="font-size: 1em" onchange="document.getElementById('onlyMasked').style.display = this.value == 'json' ? 'none' : ''; document.getElementById('onlyMaskedLabel').style.display = document.getElementById('onlyMasked').style.display; document.getElementById('replaceSpaces').style.display = this.value == 'json' ? 'none' : ''; document.getElementById('replaceSpacesLabel').style.display = document.getElementById('replaceSpaces').style.display;">
+								<option value="json">JSON</option>
+								<option value="fasta" selected>FASTA</option>
+								<option value="phylip">PHYLIP</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td colspan=2 style="padding-bottom: 1em">
+							<input type="checkbox" checked id="onlyMasked"></input><label id="onlyMaskedLabel" for="onlyMasked">Include only umasked positions</label>
+						</td>
+					</tr>
+					<tr>
+						<td colspan=2 style="padding-bottom: 1em">
+							<input type="checkbox" checked id="onlyActive"></input><label for="onlyActive">Include only active partitions</label>
+						</td>
+					</tr>
+					<tr>
+						<td colspan=2 style="padding-bottom: 1em">
+							<select id="fileType" style="font-size: 1em; width: 100%;">
+								<option value="single">Single file</option>
+								<option value="zip" selected>One file per partition</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td colspan=2 style="padding-bottom: 1em">
+							<input type="checkbox" id="replaceSpaces"></input><label for="replaceSpaces" id="replaceSpacesLabel">Replace spaces in sequence names</label>
+						</td>
+					</tr>
+					<tr>
+						<td>File name:</td>
+						<td><input type="text" value="alignment" id="outFileName"></input></td>
+					</tr>
+					<tr>
+						<td style="text-align: center">
+							<span class="fileButton noselect" style="display: inline-block; margin-bottom: 0; margin-top: 1em;" onclick="save();">Save</span>
+						</td>
+						<td style="text-align: center">
+							<span class="fileButton noselect" style="display: inline-block; margin-bottom: 0; margin-top: 1em;" onclick="cancelSave();">Cancel</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</body>
+</html>
