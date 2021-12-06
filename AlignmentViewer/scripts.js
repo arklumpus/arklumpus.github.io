@@ -11,6 +11,13 @@ var partitionCanvasScroll = 0;
 
 function loaded()
 {
+	let testCanvas = document.createElement("canvas");
+	let testContext = testCanvas.getContext("2d");
+	
+	testContext.font = "bold 12px Roboto Mono";
+	testContext.fillText("test", 0, 0);
+	
+	
 	partitionCanvas = document.getElementById("partitionCanvas");
 	mainCanvas = document.getElementById("mainCanvas");
 	partNameCanvas = document.getElementById("partNameCanvas");
@@ -116,7 +123,7 @@ function loaded()
 function resized(event)
 {
 	partitionCanvas.width = 10;
-	partitionCanvas.height = 10;
+	partitionCanvas.height = 300;
 	
 	mainCanvas.width = 10;
 	mainCanvas.height = 10;
@@ -124,13 +131,13 @@ function resized(event)
 	partNameCanvas.width = 10;
 	partNameCanvas.height = 10;
 	
-	partitionCanvas.style.height = "0";
+	partitionCanvas.style.height = "300";
 	
 	setTimeout(function() {
-		
 		partitionCanvas.style.height = "100%";
 				
 		setTimeout(function() {
+			
 		partitionCanvas.width = partitionCanvas.clientWidth;
 		partitionCanvas.height = partitionCanvas.clientHeight;
 		
@@ -140,8 +147,8 @@ function resized(event)
 		partNameCanvas.width = partNameCanvas.clientWidth;
 		partNameCanvas.height = partNameCanvas.clientHeight;
 		drawEverything();
-		}, 1);
-	}, 1);
+		}, 100);
+	}, 100);
 }
 
 function colToHEX(col)

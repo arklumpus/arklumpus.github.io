@@ -173,106 +173,124 @@
 		<script type="text/javascript" src="uiScripts.js"></script>
 	</head>
 	<body onload="loaded();" ondrop="dropped(event);" ondragover="event.preventDefault();" ondragenter="event.preventDefault();">
+	
 		<table align="center" class="mainTable">
 			<tr>
-				<td class="partNameTd" class="firstColumn"><canvas id="partNameCanvas" style="width: 100%; height: 100%;"></canvas></td>
-				<td rowspan=2 class="secondColumn"><canvas id="partitionCanvas" style="width: 100%; height: 100%;"></canvas></td>
-			</tr>
-			<tr>
-				<td class="firstColumn" rowspan=5><canvas id="mainCanvas" style="width: 100%; height: 100%;"></canvas></td>
-			</tr>
-			<tr style="height: 1px">
-				<td style="text-align: center">
-					<span class="fileButton noselect" style="display: inline-block; margin-bottom: 0; margin-top: 0.5em" onclick="deleteSeq();">Delete sequences</span>
-				</td>
-			</tr>
-			<tr style="height: 1px">
-				<td style="text-align: center">
-					<span class="fileButton noselect" style="display: inline-block; margin-bottom: 0; margin-top: 0.5em" onclick="selectIncomplete();">Select incomplete sequences</span>
-				</td>
-			</tr>
-			<tr style="height: 1px">
 				<td>
-					<table id="filterTable">
-						<tr>
-							<td class="tableHeader" colspan=2>Filter</td>
+					<table style="width: 100%; height: 100%">
+						<tr style="height: 1px">
+							<td class="partNameTd" class="firstColumn"><canvas id="partNameCanvas" style="width: 100%; height: 100%"></canvas></td>
 						</tr>
+						<tr style="height: 100%">
+							<td class="firstColumn"><canvas id="mainCanvas" style="width: 100%; height: calc(100vh - 220px)"></canvas></td>
+						</tr>
+					</table>
+				</td>
+				<td style="width: 1px">
+					<table style="width: 100%; height: 100%">
 						<tr>
-							<td>Apply to:</td>
-							<td style="width:1px">
-								<select id="filterApply" style="width:100%">
-									<option value="all">All partitions</option>
-									<option value="active" selected>Active partitions</option>
-									<option value="selected">Selected partitions</option>
-								</select>
+							<td class="secondColumn"><canvas id="partitionCanvas" style="width: 100%; height: 100%;"></canvas></td>
+						</tr>
+						<tr style="height: 1px">
+							<td style="text-align: center">
+								<span class="fileButton noselect" style="display: inline-block; margin-bottom: 0; margin-top: 0.5em" onclick="deleteSeq();">Delete sequences</span>
 							</td>
 						</tr>
-						<tr>
-							<td>Type:</td>
-							<td style="width:1px">
-								<select id="filterType" style="width:100%">
-									<option value="start">Distance from start</option>
-									<option value="end">Distance from end</option>
-									<option value="gap" selected>Gap content</option>
-									<option value="id+G">Sequence identity (include gaps)</option>
-									<option value="id-G">Sequence identity (exclude gaps)</option>
-								</select>
+						<tr style="height: 1px">
+							<td style="text-align: center">
+								<span class="fileButton noselect" style="display: inline-block; margin-bottom: 0; margin-top: 0.5em" onclick="selectIncomplete();">Select incomplete sequences</span>
 							</td>
 						</tr>
-						<tr>
-							<td>Threshold:</td>
-							<td style="width:1px; white-space:nowrap">
-								<select id="thresholdSide">
-									<option value="greater" select>></option>
-									<option value="smaller"><</option>
-								</select>
-								<input type="number" value="0.5" step=0.1 id="thresholdValue"></input>
-								<select id="thresholdType">
-									<option value="absolute">Absolute</option>
-									<option value="relative" selected>Relative</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td>Operation:</td>
-							<td style="width: 1px; white-space: nowrap">
-								<table style="border-collapse: collapse; width: 100%">
+						
+						<tr style="height: 1px">
+							<td>
+								<table id="filterTable">
 									<tr>
-										<td style="width: 1px">
-											<select id="filterOperation">
-												<option value="set" selected>SET</option>
-												<option value="and">AND</option>
-												<option value="or">OR</option>
-												<option value="andNot">AND NOT</option>
-												<option value="orNot">OR NOT</option>
-												<option value="nand">NAND</option>
-												<option value="xor">XOR</option>
+										<td class="tableHeader" colspan=2>Filter</td>
+									</tr>
+									<tr>
+										<td>Apply to:</td>
+										<td style="width:1px">
+											<select id="filterApply" style="width:100%">
+												<option value="all">All partitions</option>
+												<option value="active" selected>Active partitions</option>
+												<option value="selected">Selected partitions</option>
 											</select>
 										</td>
-										<td>
-											<select id="filterValue" style="width: 100%">
-												<option value="0" selected>0</option>
-												<option value="1">1</option>
+									</tr>
+									<tr>
+										<td>Type:</td>
+										<td style="width:1px">
+											<select id="filterType" style="width:100%">
+												<option value="start">Distance from start</option>
+												<option value="end">Distance from end</option>
+												<option value="gap" selected>Gap content</option>
+												<option value="id+G">Sequence identity (include gaps)</option>
+												<option value="id-G">Sequence identity (exclude gaps)</option>
 											</select>
+										</td>
+									</tr>
+									<tr>
+										<td>Threshold:</td>
+										<td style="width:1px; white-space:nowrap">
+											<select id="thresholdSide">
+												<option value="greater" select>></option>
+												<option value="smaller"><</option>
+											</select>
+											<input type="number" value="0.5" step=0.1 id="thresholdValue"></input>
+											<select id="thresholdType">
+												<option value="absolute">Absolute</option>
+												<option value="relative" selected>Relative</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td>Operation:</td>
+										<td style="width: 1px; white-space: nowrap">
+											<table style="border-collapse: collapse; width: 100%">
+												<tr>
+													<td style="width: 1px">
+														<select id="filterOperation">
+															<option value="set" selected>SET</option>
+															<option value="and">AND</option>
+															<option value="or">OR</option>
+															<option value="andNot">AND NOT</option>
+															<option value="orNot">OR NOT</option>
+															<option value="nand">NAND</option>
+															<option value="xor">XOR</option>
+														</select>
+													</td>
+													<td>
+														<select id="filterValue" style="width: 100%">
+															<option value="0" selected>0</option>
+															<option value="1">1</option>
+														</select>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td colspan=2 style="text-align: center">
+											<span class="fileButton noselect" style="display: inline-block; margin-bottom: 0.5em; margin-top: 0.5em" onclick="applyFilter();">Apply</span>
 										</td>
 									</tr>
 								</table>
 							</td>
 						</tr>
-						<tr>
-							<td colspan=2 style="text-align: center">
-								<span class="fileButton noselect" style="display: inline-block; margin-bottom: 0.5em; margin-top: 0.5em" onclick="applyFilter();">Apply</span>
+						
+						<tr style="height: 1px">
+							<td style="text-align: center">
+								<span class="fileButton noselect" style="display: inline-block; margin-bottom: 0; margin-top: 0.5em" onclick="openSave();">Save alignment</span>
 							</td>
 						</tr>
+						
 					</table>
 				</td>
 			</tr>
-			<tr style="height: 1px">
-				<td style="text-align: center">
-					<span class="fileButton noselect" style="display: inline-block; margin-bottom: 0; margin-top: 0.5em" onclick="openSave();">Save alignment</span>
-				</td>
-			</tr>
-			<tr>
+		
+
+			<tr style="height: 170px">
 				<td colspan=2 id="uiContainer">
 					<div style="width: 98vw; overflow-x: auto; margin-left: 50%; transform: translateX(-50%)">
 						<table id="uiTable"> 

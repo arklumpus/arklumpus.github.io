@@ -95,7 +95,7 @@ function drawAlignment()
 	ctx.translate(maxNameLen + 4, 0);
 	translations[0] += maxNameLen + 4;
 	
-	ctx.font = "bold " + alnFontSize + "px Roboto Mono";
+	ctx.font = "bold " + alnFontSize + "px Roboto Mono, monospace";
 	partNameCtx.font = "bold 16px Open Sans";
 	var drawLetters = drawAlignmentLetters && ctx.measureText("M").width < alnBlockWidth - 2;
 	
