@@ -1,4 +1,22 @@
-﻿var AAColors = { A: "rgb(25, 128, 230)", C: "rgb(230, 128, 128)", D: "rgb(204, 77, 204)", E: "rgb(204, 77, 204)", F: "rgb(25, 128, 230)", G: "rgb(230, 153, 77)", H: "rgb(25, 179, 179)", I: "rgb(25, 128, 230)", K: "rgb(230, 51, 25)", L: "rgb(25, 128, 230)", M: "rgb(25, 128, 230)", N: "rgb(25, 204, 25)", P: "rgb(204, 204, 0)", Q: "rgb(25, 204, 25)", R: "rgb(230, 51, 25)", S: "rgb(25, 204, 25)", T: "rgb(25, 204, 25)", V: "rgb(25, 128, 230)", W: "rgb(25, 128, 230)", Y: "rgb(25, 179, 179)", "-": "rgb(255, 255, 255)" };
+﻿/*******************************************************************************
+	AlignmentViewer - A web application to display, filter and combine
+	sequence alignments.
+    Copyright (C) 2017-2021 Giorgio Bianchini
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, version 3.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*******************************************************************************/
+
+var AAColors = { A: "rgb(25, 128, 230)", C: "rgb(230, 128, 128)", D: "rgb(204, 77, 204)", E: "rgb(204, 77, 204)", F: "rgb(25, 128, 230)", G: "rgb(230, 153, 77)", H: "rgb(25, 179, 179)", I: "rgb(25, 128, 230)", K: "rgb(230, 51, 25)", L: "rgb(25, 128, 230)", M: "rgb(25, 128, 230)", N: "rgb(25, 204, 25)", P: "rgb(204, 204, 0)", Q: "rgb(25, 204, 25)", R: "rgb(230, 51, 25)", S: "rgb(25, 204, 25)", T: "rgb(25, 204, 25)", V: "rgb(25, 128, 230)", W: "rgb(25, 128, 230)", Y: "rgb(25, 179, 179)", "-": "rgb(255, 255, 255)" };
 
 var NucColors = { A: "rgb(255, 64, 64)", C: "rgb(64, 255, 64)", T: "rgb(64, 64, 255)", U: "rgb(64, 64, 255)", G: "rgb(255, 255, 64)", "-": "rgb(255, 255, 255)" };
 
