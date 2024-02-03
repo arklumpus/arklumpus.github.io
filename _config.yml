@@ -27,6 +27,12 @@ author:
   avatar: /assets/img/avatar.jpg
   stackoverflow:
   publications:
+    - publication6:
+      title: "TreeViewer: Flexible, modular software to visualise and manipulate phylogenetic trees"
+      authors: <b>Giorgio Bianchini</b>, Patricia Sánchez-Baracaldo
+      journal: Ecology and Evolution
+      year: 2024
+      doi: 10.1002/ece3.10873
     - publication3:
       title: "sMap: Evolution of independent, dependent and conditioned discrete characters in a Bayesian framework"
       authors: <b>Giorgio Bianchini</b>, Patricia Sánchez-Baracaldo
