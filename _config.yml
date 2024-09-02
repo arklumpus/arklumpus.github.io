@@ -15,7 +15,7 @@ exclude: [vendor]
 # Author settings
 author:
   name: Dr. Giorgio Bianchini
-  title: Research Associate
+  title: Senior Research Associate
   address: University of Bristol
   email: giorgio.bianchini@bristol.ac.uk
   link:
@@ -27,6 +27,12 @@ author:
   avatar: /assets/img/avatar.jpg
   stackoverflow:
   publications:
+    - publication7:
+      title: "Stochastic Character Mapping, Bayesian Model Selection, and Biosynthetic Pathways Shed New Light on the Evolution of Habitat Preference in Cyanobacteria"
+      authors: <b>Giorgio Bianchini</b>, Martin Hagemann, Patricia Sánchez-Baracaldo
+      journal: Systematic Biology
+      year: 2024
+      doi: 10.1093/sysbio/syae025
     - publication6:
       title: "TreeViewer: Flexible, modular software to visualise and manipulate phylogenetic trees"
       authors: <b>Giorgio Bianchini</b>, Patricia Sánchez-Baracaldo
