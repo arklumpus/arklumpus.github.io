@@ -27,7 +27,10 @@ var partNameCtx;
 var partitions = [];
 var partitionCanvasScroll = 0;
 
-function loaded()
+var aliFilterDefaultModel;
+var aliFilterCustomModel;
+
+async function loaded()
 {
 	let testCanvas = document.createElement("canvas");
 	let testContext = testCanvas.getContext("2d");
@@ -136,6 +139,18 @@ function loaded()
 	}
 	
 	window.addEventListener("resize", resized);
+
+	try
+	{
+		aliFilterDefaultModel = await aliFilter.loadModelFromURL("alifilter.validated.json");
+		document.getElementById("thresholdValue").value = aliFilterDefaultModel.FastThreshold;
+		document.getElementById("thresholdSide").value = "smaller";
+	}
+	catch
+	{
+		document.getElementById("filterType").value = "gap";
+		document.getElementById("filterType").options.remove(5);
+	}
 }
 
 function resized(event)

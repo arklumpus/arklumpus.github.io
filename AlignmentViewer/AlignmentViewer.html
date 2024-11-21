@@ -185,6 +185,7 @@
 		</style>
 		<script type="text/javascript" src="jszip.min.js"></script>
 		<script type="text/javascript" src="sequenceUtils.js"></script>
+		<script type="text/javascript" src="alifilter.js"></script>
 		<script type="text/javascript" src="scripts.js"></script>
 		<script type="text/javascript" src="scriptsAlignment.js"></script>
 		<script type="text/javascript" src="uiScripts.js"></script>
@@ -238,12 +239,14 @@
 									<tr>
 										<td>Type:</td>
 										<td style="width:1px">
-											<select id="filterType" style="width:100%">
+											<select id="filterType" style="width:100%" onchange="filterTypeChange()">
 												<option value="start">Distance from start</option>
 												<option value="end">Distance from end</option>
-												<option value="gap" selected>Gap content</option>
+												<option value="gap">Gap content</option>
 												<option value="id+G">Sequence identity (include gaps)</option>
 												<option value="id-G">Sequence identity (exclude gaps)</option>
+												<option value="alifilter" selected>AliFilter (default model)</option>
+												<option value="alifilter_custom">AliFilter (custom model)</option>
 											</select>
 										</td>
 									</tr>
@@ -251,7 +254,7 @@
 										<td>Threshold:</td>
 										<td style="width:1px; white-space:nowrap">
 											<select id="thresholdSide">
-												<option value="greater" select>></option>
+												<option value="greater" selected>></option>
 												<option value="smaller"><</option>
 											</select>
 											<input type="number" value="0.5" step=0.1 id="thresholdValue"></input>

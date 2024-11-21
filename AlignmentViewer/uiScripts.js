@@ -46,6 +46,78 @@ function uiChange()
 	drawEverything();
 }
 
+function filterTypeChange()
+{
+	if(document.getElementById("filterType").value == "alifilter")
+	{
+		document.getElementById("thresholdValue").value = aliFilterDefaultModel.FastThreshold;
+		document.getElementById("thresholdSide").value = "smaller";
+		document.getElementById("thresholdType").value = "relative";
+		document.getElementById("filterOperation").value = "set";
+		document.getElementById("filterValue").value = "0";
+	}
+	else if (document.getElementById("filterType").value == "alifilter_custom")
+	{
+		let input = document.createElement("input");
+		input.setAttribute("type", "file");
+
+		input.oncancel = function()
+		{
+			if (document.getElementById("filterType").options[5].value = "alifilter")
+			{
+				document.getElementById("filterType").value = "alifilter";
+				document.getElementById("thresholdValue").value = aliFilterDefaultModel.FastThreshold;
+				document.getElementById("thresholdSide").value = "smaller";
+				document.getElementById("thresholdType").value = "relative";
+				document.getElementById("filterOperation").value = "set";
+				document.getElementById("filterValue").value = "0";
+			}
+			else
+			{
+				document.getElementById("filterType").value = "gap";
+			}
+		}
+		
+		input.onchange = function()
+		{
+			if (input.files.length > 0)
+			{
+				var reader = new FileReader();
+				reader.onload = function (e)
+				{
+					let modelJson = e.target.result;
+
+					aliFilterCustomModel = aliFilter.loadModelFromJSON(modelJson);
+					document.getElementById("thresholdValue").value = aliFilterCustomModel.FastThreshold;
+					document.getElementById("thresholdSide").value = "smaller";
+					document.getElementById("thresholdType").value = "relative";
+					document.getElementById("filterOperation").value = "set";
+					document.getElementById("filterValue").value = "0";
+				};
+				reader.readAsText(input.files[0]);
+			}
+			else
+			{
+				if (document.getElementById("filterType").options[5].value = "alifilter")
+				{
+					document.getElementById("filterType").value = "alifilter";
+					document.getElementById("thresholdValue").value = aliFilterDefaultModel.FastThreshold;
+					document.getElementById("thresholdSide").value = "smaller";
+					document.getElementById("thresholdType").value = "relative";
+					document.getElementById("filterOperation").value = "set";
+					document.getElementById("filterValue").value = "0";
+				}
+				else
+				{
+					document.getElementById("filterType").value = "gap";
+				}
+			}
+		};
+		
+		input.click();
+	}
+}
+
 function applyFilter()
 {
 	var target = document.getElementById("filterApply").value;
@@ -271,6 +343,98 @@ function applyFilter()
 					var cons = (letterCounts.sort(function (a, b) { return b[1] - a[1]; })[0][1] - 1) / (thresholdType ? 1 : (partition.Content.length - gapCount));
 						
 					return cons < thresholdValue;
+				};
+			}
+			break;
+		case "alifilter":
+			if (thresholdSide == "greater")
+			{
+				checkFunction = function(partition, index) {
+					if (!partition.AliFilterFeatures)
+					{
+						let sequences = new Array(partition.Content.length);
+						for (let i = 0; i < partition.Content.length; i++)
+						{
+							sequences[i]  = partition.Content[i].Sequence;
+						}
+						partition.AliFilterFeatures = aliFilter.getAlignmentFeatures(sequences);
+						partition.AliFilterScores = [];
+					}
+
+					if (!partition.AliFilterScores[aliFilterDefaultModel.Id])
+					{
+						partition.AliFilterScores[aliFilterDefaultModel.Id] = aliFilterDefaultModel.getScores(partition.AliFilterFeatures);
+					}
+
+					return partition.AliFilterScores[aliFilterDefaultModel.Id][index] > thresholdValue;
+				};
+			}
+			else
+			{
+				checkFunction = function(partition, index) {
+					if (!partition.AliFilterFeatures)
+						{
+							let sequences = new Array(partition.Content.length);
+							for (let i = 0; i < partition.Content.length; i++)
+							{
+								sequences[i]  = partition.Content[i].Sequence;
+							}
+							partition.AliFilterFeatures = aliFilter.getAlignmentFeatures(sequences);
+							partition.AliFilterScores = [];
+						}
+	
+						if (!partition.AliFilterScores[aliFilterDefaultModel.Id])
+						{
+							partition.AliFilterScores[aliFilterDefaultModel.Id] = aliFilterDefaultModel.getScores(partition.AliFilterFeatures);
+						}
+	
+						return partition.AliFilterScores[aliFilterDefaultModel.Id][index] < thresholdValue;
+				};
+			}
+			break;
+		case "alifilter_custom":
+			if (thresholdSide == "greater")
+			{
+				checkFunction = function(partition, index) {
+					if (!partition.AliFilterFeatures)
+					{
+						let sequences = new Array(partition.Content.length);
+						for (let i = 0; i < partition.Content.length; i++)
+						{
+							sequences[i]  = partition.Content[i].Sequence;
+						}
+						partition.AliFilterFeatures = aliFilter.getAlignmentFeatures(sequences);
+						partition.AliFilterScores = [];
+					}
+
+					if (!partition.AliFilterScores[aliFilterCustomModel.Id])
+					{
+						partition.AliFilterScores[aliFilterCustomModel.Id] = aliFilterCustomModel.getScores(partition.AliFilterFeatures);
+					}
+
+					return partition.AliFilterScores[aliFilterCustomModel.Id][index] > thresholdValue;
+				};
+			}
+			else
+			{
+				checkFunction = function(partition, index) {
+					if (!partition.AliFilterFeatures)
+						{
+							let sequences = new Array(partition.Content.length);
+							for (let i = 0; i < partition.Content.length; i++)
+							{
+								sequences[i]  = partition.Content[i].Sequence;
+							}
+							partition.AliFilterFeatures = aliFilter.getAlignmentFeatures(sequences);
+							partition.AliFilterScores = [];
+						}
+	
+						if (!partition.AliFilterScores[aliFilterCustomModel.Id])
+						{
+							partition.AliFilterScores[aliFilterCustomModel.Id] = aliFilterCustomModel.getScores(partition.AliFilterFeatures);
+						}
+	
+						return partition.AliFilterScores[aliFilterCustomModel.Id][index] < thresholdValue;
 				};
 			}
 			break;
