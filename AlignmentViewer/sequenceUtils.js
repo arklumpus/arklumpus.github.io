@@ -59,7 +59,7 @@ function readPhy(fileContent)
 {
 	var lines = fileContent.splitLines();
 	
-	var rx = /^ *([^ ]*) *([^ ]*)$/;
+	var rx = /^ *([^ ]*) *([^ ]*) *$/;
 	
 	var mch = lines[0].match(rx);
 	
