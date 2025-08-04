@@ -15,9 +15,9 @@ exclude: [vendor]
 # Author settings
 author:
   name: Dr. Giorgio Bianchini
-  title: Senior Research Associate
-  address: University of Bristol
-  email: giorgio.bianchini@bristol.ac.uk
+  title: Research Associate
+  address: University of Bath
+  email: gb2177@bath.ac.uk
   link:
   weibo:
   github: arklumpus
@@ -39,6 +39,12 @@ author:
       journal: Ecology and Evolution
       year: 2024
       doi: 10.1002/ece3.10873
+    - publication8:
+      title: "Inhibition of phototrophic iron oxidation by nitric oxide in ferruginous environments"
+      authors: Verena Nikeleit, Adrian Mellage, <b>Giorgio Bianchini</b>, Lea Sauter, Steffen Buessecker, Stefanie Gotterbarm, Manuel Schad, Kurt Konhauser, Aubrey L. Zerkle, Patricia Sánchez-Baracaldo, Andreas Kappler & Casey Bryce
+      journal: Nature Geoscience
+      year: 2024
+      doi: 10.1038/s41561-024-01560-9
     - publication3:
       title: "sMap: Evolution of independent, dependent and conditioned discrete characters in a Bayesian framework"
       authors: <b>Giorgio Bianchini</b>, Patricia Sánchez-Baracaldo
